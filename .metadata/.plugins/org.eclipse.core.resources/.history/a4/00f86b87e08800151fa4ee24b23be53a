@@ -1,0 +1,141 @@
+import java.util.Scanner;
+public class Colosseum {
+	static int playerNumber;
+	public static void main(String[] args){
+		Scanner mainInput = new Scanner(System.in);
+		int attackChoice;
+		int roll = 0;
+		int loser = 0;
+		int round = 1;
+		int roundStarter;
+		String playAgainString = "";
+		boolean playAgain = true;
+		boolean pokemonMade = false;
+		while (playAgain = true){
+			playerNumber = 1;
+			boolean gameOver = false;
+			if (pokemonMade = false){
+				Pokemon p1 = new Pokemon();
+				Pokemon p2 = new Pokemon();
+			}
+			else{
+				p1.resetBuffs();
+				p2.resetBuffs();
+			}
+			Dice coin = new Dice(2);
+			userBuild(p1);
+			playerNumber++;
+			userBuild(p2);
+			System.out.println("Player 1 will roll a D2 to decide who goes first.");
+			roll = coin.roll();
+			if (roll == 1){
+				System.out.println("Player 1 rolls a 1 and will go first.");
+				playerNumber = 1;
+				roundStarter = 1;
+			}
+			else{
+				System.out.println("Player 1 rolls a 2 and will go second.");
+				playerNumber = 2;
+				roundStarter = 2;
+			}
+			while (gameOver == false){
+				if (round == 11){
+					System.out.println("Both fighters are still standing! It's a draw!");
+					gameOver = true;
+				}
+				if (playerNumber == roundStarter){
+					System.out.println("ROUND " + round +"!");
+					round++;
+				}
+				System.out.println("Player " +playerNumber+ ", attack, use an attack buff, or use a defense buff? (1,2,3):");
+				attackChoice = mainInput.nextInt();
+				if (playerNumber == 1){
+					while (attackChoice != 1 && attackChoice !=2 && attackChoice !=3){
+						System.out.println("Please choose a valid move(1, 2, or 3)");
+						attackChoice = mainInput.nextInt();
+					}
+					while (attackChoice == 2 && p1.getASpellCast() == true){
+						System.out.println("You already cast that spell, pick again!");
+						attackChoice = mainInput.nextInt();
+					}
+					while (attackChoice == 3 && p1.getDSpellCast() == true){
+						System.out.println("You already cast that spell, pick again!");
+						attackChoice = mainInput.nextInt();
+				}
+					gameOver = p1.attack(p2, attackChoice);
+					playerNumber = 2;
+				}
+				else if (playerNumber == 2){
+					while (attackChoice != 1 && attackChoice !=2 && attackChoice !=3){
+						System.out.println("Please choose a valid move(1, 2, or 3)");
+						attackChoice = mainInput.nextInt();
+					}
+					while (attackChoice == 2 && p2.getASpellCast() == true){
+						System.out.println("You already cast that spell, pick again!");
+						attackChoice = mainInput.nextInt();
+					}
+					while (attackChoice == 3 && p2.getDSpellCast() == true){
+						System.out.println("You already cast that spell, pick again!");
+						attackChoice = mainInput.nextInt();
+				}
+					gameOver = p2.attack(p1, attackChoice);
+					playerNumber = 1;
+				}
+			}
+			loser = playerNumber;
+			while(!playAgainString.toLowerCase().equals("yes") && !playAgainString.toLowerCase().equals("no")){
+				System.out.println("Game over! Play again? (yes/no):");
+				playAgainString = mainInput.nextLine();
+			}
+			if (playAgainString.toLowerCase() == "yes"){
+					playAgain = true;
+					playAgainString = "";
+					System.out.println("Reuse Pokemon?");
+			}
+			else{
+				playAgain = false;
+			}
+			
+		}
+	}
+	public static void userBuild(Pokemon p){
+		String userName = "";
+		int userHP = 0;
+		int userAttack = 0;
+		int userDefense = 0;
+		int maxDefense = 0;
+		Scanner buildInput = new Scanner(System.in);
+		System.out.println("Player " + playerNumber +", build your Pokemon!");
+		System.out.println("=====================");
+		System.out.print("Please name your Pokemon: ");
+		userName = buildInput.nextLine();
+		while(userName == ""){
+			System.out.println("The Pokemon's name cannot be blank.");
+			userName = buildInput.nextLine();
+		}
+		p.setName(userName);
+		System.out.println("How many hit points will it have? (1-50)");
+		userHP = buildInput.nextInt();
+		while (!(userHP <= 50) || !(userHP>=1)){
+			System.out.println("Sorry. The hit points must be between 1 and 50: ");
+			userHP = buildInput.nextInt();
+		}
+		p.setHp(userHP);
+		System.out.println("Split fifty points between attack level and defense level.");
+		System.out.println("Enter your attack level (1-49)");
+		userAttack = buildInput.nextInt();
+		while (!(userAttack < 50) || !(userAttack>=1)){
+			System.out.println("Sorry. The attack level must be between 1 and 50: ");
+			userAttack = buildInput.nextInt();
+		}
+		p.setAttack(userAttack);
+		maxDefense = 50-userAttack;
+		System.out.println("Enter your defense level (1-" +maxDefense + ")");
+		userDefense = buildInput.nextInt();
+		while (!(userDefense <= maxDefense) || !(userDefense>=1)){
+			System.out.println("Sorry. The defense level must be between 1 and " + maxDefense +":");
+			userDefense = buildInput.nextInt();
+		}
+		p.setDefense(userDefense);
+	}
+}

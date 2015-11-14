@@ -1,0 +1,13 @@
+import java.util.Random;
+public class Dice {
+	private final int numSides;
+	Dice(int sides){
+		numSides = sides;
+	}
+	public int roll(){
+		Random rand = new Random();
+		int randomInt;
+		randomInt = rand.nextInt(numSides) + 1;
+		return randomInt;
+	}
+}

@@ -1,0 +1,74 @@
+import java.util.Scanner;
+public class Colosseum {
+	static int playerNumber = 1;
+	public static void main(String[] args){
+		Scanner maininput = new Scanner(System.in);
+		int attackChoice;
+		int roll = 0;
+		int round = 1;
+		boolean gameOver = false;
+		boolean playAgain = true;
+		Pokemon p1 = new Pokemon();
+		Pokemon p2 = new Pokemon();
+		Dice coin = new Dice(2);
+		userBuild(p1);
+		playerNumber++;
+		userBuild(p2);
+		System.out.println("Player 1 will roll a D2 to decide who goes first.");
+		roll = coin.roll();
+		if (roll == 1){
+			System.out.println("Player 1 rolls a 1 and will go first.");
+			playerNumber = 1;
+		}
+		else{
+			System.out.println("Player 1 rolls a 2 and will go second.");
+			playerNumber = 2;
+		}
+		while (gameOver == false){
+			System.out.println("Attack, use an attack buff, or use a defense buff? (1,2,3)");
+			attackChoice = maininput.nextInt();
+			if (playerNumber == 1){
+				p1.attack(p2, attackChoice);
+			}
+		}
+	}
+	public static void userBuild(Pokemon p){
+		String userName = "";
+		int userHP = 0;
+		int userAttack = 0;
+		int userDefense = 0;
+		int maxDefense = 0;
+		Scanner buildinput = new Scanner(System.in);
+		System.out.println("Player " + playerNumber +", build your Pokemon!");
+		System.out.println("=====================");
+		System.out.print("Please name your Pokemon: ");
+		userName = buildinput.nextLine();
+		while(userName == ""){
+			System.out.println("The Pokemon's name cannot be blank.");
+			userName = buildinput.nextLine();
+		}
+		p.setName(userName);
+		System.out.println("How many hit points will it have? (1-50)");
+		userHP = buildinput.nextInt();
+		while (!(userHP <= 50) || !(userHP>1)){
+			System.out.println("Sorry. The hit points must be between 1 and 50: ");
+			userHP = buildinput.nextInt();
+		}
+		System.out.println("Split fifty points between attack level and defense level.");
+		System.out.println("Enter your attack level (1-49)");
+		userAttack = buildinput.nextInt();
+		while (!(userAttack < 50) || !(userAttack>1)){
+			System.out.println("Sorry. The attack level must be between 1 and 50: ");
+			userAttack = buildinput.nextInt();
+		}
+		p.setAttack(userAttack);
+		maxDefense = 50-userAttack;
+		System.out.println("Enter your defense level (1-" +maxDefense + ")");
+		userDefense = buildinput.nextInt();
+		while (!(userDefense <= maxDefense) || !(userDefense>1)){
+			System.out.println("Sorry. The defense level must be between 1 and " + maxDefense +":");
+			userDefense = buildinput.nextInt();
+		}
+		p.setDefense(userDefense);
+		}
+		}

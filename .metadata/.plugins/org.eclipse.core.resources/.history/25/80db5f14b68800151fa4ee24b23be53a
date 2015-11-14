@@ -1,0 +1,42 @@
+public class Pokemon {
+	private int hp;
+	private int attack;
+	private int defense;
+	int attackBonus;
+	int defenseBonus;
+	int damage;
+	private String name;
+	private Dice d20;
+	private Dice d6;
+	Pokemon(){
+		hp = 0;
+		attack = 0;
+		defense = 0;
+		attackBonus = 0;
+		defenseBonus = 0;
+		damage = 0;
+		name = "";
+		d20 = new Dice(20);
+		d6 = new Dice(6);
+	}
+	public boolean attack(Pokemon opponent){
+		attackBonus = d20.roll();
+		defenseBonus = d20.roll();
+		if (this.attackBonus > opponent.defenseBonus){
+			damage = d6.roll() + d6.roll() + d6.roll();
+		}
+	}
+	public void setName(String userName){
+		name = userName;
+	}
+	public void setAttack(int userAttack){
+		attack = userAttack;
+	}
+	public void setDefense(int userDefense){
+		defense = userDefense;
+	}
+	public void setHp(int userHp){
+		hp = userHp;
+	}
+	
+}

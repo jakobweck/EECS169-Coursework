@@ -1,0 +1,9 @@
+public class Pokemon {
+	private int hp;
+	private int attack;
+	private int defense;
+	private String name;
+	Dice d20 = new Dice(20);
+	static Dice d6 = new Dice(6);
+
+}

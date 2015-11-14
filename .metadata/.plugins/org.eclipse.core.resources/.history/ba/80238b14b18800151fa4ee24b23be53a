@@ -1,0 +1,29 @@
+import java.util.Scanner;
+public class Colosseum {
+	static int playerNumber = 1;
+	public static void main(String[] args){
+		Pokemon p1 = new Pokemon();
+		Pokemon p2 = new Pokemon();
+		Dice coin = new Dice(2);
+		userBuild(p1);
+		playerNumber++;
+		userBuild(p2);
+	}
+	public static void userBuild(Pokemon p){
+		String userName = "";
+		int userHP = 0;
+		Scanner input = new Scanner(System.in);
+		System.out.println("Player " + playerNumber +", build your Pokemon!");
+		System.out.println("=====================");
+		System.out.print("Please name your Pokemon: ");
+		while(userName == ""){
+			p.setName(input.nextLine());
+		}
+		System.out.println("How many hit points will it have? (1-50)");
+		while (!(userHP < 50) && !(userHP>1)){
+			userHP = input.nextInt();
+			System.out.println("Sorry. The attack level must be between 1 and 49: ");
+			
+	}
+}
+}

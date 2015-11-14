@@ -1,0 +1,8 @@
+import java.util.Scanner;
+public class Colosseum {
+	public static void main(String[] args){
+		Pokemon p1 = new Pokemon();
+		Pokemon p2 = new Pokemon();
+		Dice coin = new Dice(2);
+	}
+}

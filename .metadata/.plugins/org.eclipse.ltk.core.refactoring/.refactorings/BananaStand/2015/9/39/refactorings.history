@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename compilation unit &apos;BananaStand3.java&apos; to &apos;BananaStand.java&apos;&#x0D;&#x0A;- Original project: &apos;BananaStand&apos;&#x0D;&#x0A;- Original element: &apos;BananaStand3.java&apos;&#x0D;&#x0A;- Renamed element: &apos;BananaStand.java&apos;" description="Rename compilation unit &apos;BananaStand3.java&apos;" flags="2" id="org.eclipse.jdt.ui.rename.compilationunit" input="/src&lt;{BananaStand3.java" name="BananaStand.java" references="false" stamp="1443104077813" version="1.0"/>
+</session>

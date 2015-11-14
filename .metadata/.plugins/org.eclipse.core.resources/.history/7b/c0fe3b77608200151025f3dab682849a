@@ -1,0 +1,109 @@
+/*
+File Name: HangMan.java
+Author: Jakob Wulf-Eck 
+KUID: 2794175
+Email Address: j104w064@ku.edu
+Homework Assignment Number: 3 
+Description: Hangman game frontend implemented using methods in HangMan class
+Last Changed: 11/3/2015
+*/
+import java.util.Scanner;
+public class GameDriver {
+
+	public static void main(String[] args) {
+		String guess;
+		char guessChar;
+		String secret = "big bang";
+		boolean guessSuccess = false;
+		boolean wordGuessed = false;
+		boolean wordGuessAllowedTemp = false;
+		String playAgainString = "yes";
+		boolean playAgain = true;
+		Scanner input = new Scanner(System.in);
+		while (playAgain == true){
+			System.out.println("Welcome to the Hangman Game");
+			System.out.println("----------------------------");
+			HangMan game = new HangMan(secret);
+			while (game.isGameOver() == false){
+				guessSuccess = false;
+				wordGuessed = false;
+				wordGuessAllowedTemp = false;
+				System.out.println("Guess this: " + game.getDisguisedWord());
+				System.out.println("Guesses so far: " + game.getGuessCount());
+				System.out.println("Misses: " + game.getMissedMarker());
+				System.out.println("Enter your guess character: ");
+				guess = input.nextLine().toLowerCase();
+				guessChar = guess.charAt(0);
+				//if guess is one char, handle as a char
+				if (guess.length() == 1){
+					guessSuccess = game.guessCharacter(guessChar);
+				}
+				//else guess as a full word if word guesses are still allowed
+				else if(guess.length()> 1 && game.areWordGuessesAllowed()){
+					wordGuessed = true; 
+					wordGuessAllowedTemp = game.areWordGuessesAllowed();
+					guessSuccess = game.guessWord(guess);
+					if (guess.length() != game.getDisguisedWord().length()){
+						System.out.println("You guessed a word of length " + guess.length()
+											+ ". The secret word has a length of " + game.getDisguisedWord().length());
+					}
+				}
+				//otherwise don't guess
+				else if (!game.areWordGuessesAllowed()){
+					//System.out.println("Word guesses are no longer allowed.");
+					wordGuessed = true;
+				}
+				// guess feedback logic for single-char guesses
+				if (guessSuccess == true && wordGuessed == false){
+					System.out.println(guessChar + " is in the secret word!");
+				}
+				else if (guessSuccess == false && wordGuessed == false){
+					System.out.println(guessChar + " is not in the secret word. Death draws closer.");
+				}
+				//feedback for string guesses
+				else if (guessSuccess == true && wordGuessed == true && wordGuessAllowedTemp){
+					System.out.println(guess + " is the secret word!");
+				}
+				else if (guessSuccess == false && wordGuessed == true && wordGuessAllowedTemp){
+					System.out.println(guess + " is not the secret word. You've used your one full-word guess!");
+				}
+				else if (!wordGuessAllowedTemp){
+					System.out.println("You already used your full-word guess!");
+				}
+				
+				System.out.println();
+				}
+			// once isGameOver comes up true, display end-of-game text
+			System.out.println("Game Over!");
+			//isFound returns true if word was found
+			if (game.isFound()){
+				System.out.println("Congratulations! You guessed the secret word: " +
+										game.getDisguisedWord() +
+										" in "+
+										game.getGuessCount()+
+										" guesses!");
+				}
+			else if (!game.isFound()){
+				System.out.println("You died. Next time, guess as if your life depended on it.");
+				}
+			System.out.print("Do you want to play again? (yes/no)");
+			playAgainString = input.nextLine();
+			//if user doesn't type yes, break out of while loop
+			if (!playAgainString.toLowerCase().equals("yes")){
+					System.out.println("Thanks for playing " + game.getGamesPlayed() + " games of Hang Man.");
+					playAgain = false;
+				}
+			//otherwise reset game
+			else{
+				System.out.println("Input a new secret word");
+				secret = input.nextLine().toLowerCase();
+				for (int i = 0; i<100; i++){
+					System.out.println();
+					}
+				
+		    }
+		}
+
+	}
+	}
+
